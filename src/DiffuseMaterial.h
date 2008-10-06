@@ -33,7 +33,7 @@ class DiffuseMaterial : public Material
 
     public:
         DiffuseMaterial(Gaussian ro, double e_ro, Gaussian e, double e_e) :
-            bsdfc(ro), edfc(e), hbsdfc(e_ro), hedfc(e_e) {}
+            Material(), bsdfc(ro), edfc(e), hbsdfc(e_ro), hedfc(e_e) {}
 
         virtual double BSDF(double lambda, const LocalGeometry &local,
                 const Angle &in, const Angle &out) const = 0;
