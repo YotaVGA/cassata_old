@@ -123,6 +123,7 @@ bool Triangle::intersection(const Ray &ray, double &distance,
     if (distance < 0)
         return false;
 
+    localGeometry.setMaterial(*m);
     localGeometry.setNormal(n);
     localGeometry.setU(b.x() * uv[0][0] + b.y() * uv[1][0] +
             b.z() * uv[2][0]);
