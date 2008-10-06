@@ -26,7 +26,7 @@ using namespace Eigen;
 double DiffuseMaterial::BSDF(double lambda, const LocalGeometry &local,
         const Angle &in, const Angle &out) const
 {
-    if (!bsdtc || dot(in.cartesian(), local.normal().cartesian()) > 0 ||
+    if (!hbsdfc || dot(in.cartesian(), local.normal().cartesian()) > 0 ||
             dot(out.cartesian(), local.normal().cartesian()) > 0)
         return 0;
 
