@@ -47,7 +47,7 @@ double MaterialSum::EDF(double lambda, const LocalGeometry &local,
 bool MaterialSum::isEmitter() const
 {
     for (unsigned int i = 0; i < n; i++)
-        if (r += l[i]->isEmitter())
+        if (l[i]->isEmitter())
             return true;
 
     return false;

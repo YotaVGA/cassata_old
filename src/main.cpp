@@ -19,6 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <cstdlib>
+#include <ctime>
 #include "PinholeCamera.h"
 #include "BlackMaterial.h"
 #include "PointGeometry.h"
@@ -31,6 +33,8 @@ using namespace Eigen;
 
 int main(int argc, char *argv[])
 {
+    srand((unsigned int)time(NULL));
+
     MatrixP3d matrix;
     matrix.loadIdentity();
     Camera *camera = new PinholeCamera("ba.exr", 800, 600, matrix, matrix);
