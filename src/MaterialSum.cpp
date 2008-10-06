@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <cstdlib>
 #include "MaterialSum.h"
 
 double MaterialSum::BSDF(double lambda, const LocalGeometry &local,
@@ -56,5 +57,12 @@ void MaterialSum::distribution(Angle outs[], const LocalGeometry &local,
         unsigned int start, unsigned int stop,
         unsigned int jitx, unsigned int jity) const
 {
-    /* STUB */
+    /* In this function the jittering is ininfluent (but not in the
+     * sussequently called distribution functions) because all the materials
+     * will receive a successive BSDF or EDF query. The gain obtained with
+     * the jittering isn't so much (if any), and the jittering code is very
+     * complex, so the jittering isn't take into account for now.
+     */
+
+    l[rand() % n]->distribution(outs, local, start, stop, jitx, jity);
 }
