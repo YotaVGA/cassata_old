@@ -33,7 +33,7 @@ class LocalGeometry
         double m_u, m_v;
 
     public:
-        inline LocalGeometry(const Material *material) :
+        inline LocalGeometry(const Material *material = NULL) :
             m(material) {}
 
         inline LocalGeometry(const Material *material, Angle normal,
