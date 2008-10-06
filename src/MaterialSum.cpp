@@ -24,20 +24,31 @@
 double MaterialSum::BSDF(double lambda, const LocalGeometry &local,
         const Angle &in, const Angle &out) const
 {
-    /* STUB */
-    return 0;
+    double r = 0;
+
+    for (unsigned int i = 0; i < n; i++)
+        r += l[i]->BSDF(lambda, local, in, out);
+
+    return r;
 }
 
 double MaterialSum::EDF(double lambda, const LocalGeometry &local,
         const Angle &out) const
 {
-    /* STUB */
-    return 0;
+    double r = 0;
+
+    for (unsigned int i = 0; i < n; i++)
+        r += l[i]->EDF(lambda, local, out);
+
+    return r;
 }
 
 bool MaterialSum::isEmitter() const
 {
-    /* STUB */
+    for (unsigned int i = 0; i < n; i++)
+        if (r += l[i]->isEmitter())
+            return true;
+
     return false;
 }
 
