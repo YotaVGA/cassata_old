@@ -29,7 +29,7 @@ static double rayFactor(double lambda, Ray &ray, Vector3d &point,
 static double direct(double lambda, Ray &ray, Vector3d &point,
         LocalGeometry &local)
 {
-    return 1;
+    return 0;
 }
 
 static double indirect(double lambda, Ray &ray, Vector3d &point,
@@ -79,6 +79,8 @@ void DefaultRender::rendering()
 
                         factor = rayFactor(wavelenght_camera[i],
                                 camera_rays[j], point, local);
+                        factor += local.material().EDF(wavelenght_camera[j],
+                                local, Angle(-camera_rays[i].origin()));
 
                         for (unsigned int k = 0; k < 3; k++)
                         {
