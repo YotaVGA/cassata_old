@@ -36,7 +36,7 @@ double DiffuseMaterial::BSDF(double lambda, const LocalGeometry &local,
 double DiffuseMaterial::EDF(double lambda, const LocalGeometry &local,
         const Angle &out) const
 {
-    if (dot(out.cartesian(), local.normal().cartesian()) < 0)
+    if (!hedfc || dot(out.cartesian(), local.normal().cartesian()) < 0)
         return 0;
 
     return edfc.value(lambda) * hedfc;
