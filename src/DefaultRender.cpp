@@ -73,15 +73,14 @@ void DefaultRender::rendering()
                     {
                         values[3] = 1;
 
-                        factor = 1;
+                        factor = rayFactor(point, local);
 
                         for (unsigned int k = 0; k < 3; k++)
                         {
                             values[k] = c->energy(camera_rays[i],
                                     wavelenght_camera[j], k) /
                                 c->probability(camera_rays[i],
-                                        wavelenght_camera[j], k) * factor *
-                                rayFactor(point, local);
+                                        wavelenght_camera[j], k) * factor;
                         }
 
                         c->integrator(x, y).sample(Image::RGBA(values[0],
