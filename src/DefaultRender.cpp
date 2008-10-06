@@ -23,22 +23,26 @@
 
 using namespace Eigen;
 
-static double rayFactor(Vector3d &point, LocalGeometry &local);
+static double rayFactor(double lambda, Ray &ray, Vector3d &point,
+        LocalGeometry &local);
 
-static double direct(Vector3d &point, LocalGeometry &local)
+static double direct(double lambda, Ray &ray, Vector3d &point,
+        LocalGeometry &local)
 {
     return 1;
 }
 
-static double indirect(Vector3d &point, LocalGeometry &local)
+static double indirect(double lambda, Ray &ray, Vector3d &point,
+        LocalGeometry &local)
 {
     return 0;
 }
 
-static double rayFactor(Vector3d &point, LocalGeometry &local)
+static double rayFactor(double lambda, Ray &ray, Vector3d &point,
+        LocalGeometry &local)
 {
-    double L = direct(point, local);
-    return L + indirect(point, local);
+    double L = direct(lambda, ray, point, local);
+    return L + indirect(lambda, ray, point, local);
 }
 
 void DefaultRender::rendering()
@@ -73,7 +77,8 @@ void DefaultRender::rendering()
                     {
                         values[3] = 1;
 
-                        factor = rayFactor(point, local);
+                        factor = rayFactor(wavelenght_camera[i],
+                                camera_rays[j], point, local);
 
                         for (unsigned int k = 0; k < 3; k++)
                         {
