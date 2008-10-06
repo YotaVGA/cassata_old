@@ -20,7 +20,13 @@
  */
 
 #include "DefaultRender.h"
-#include <iostream>
+
+using namespace Eigen;
+
+static double rayFactor(Vector3d &point, LocalGeometry& local)
+{
+    return 1;
+}
 
 void DefaultRender::rendering()
 {
@@ -47,7 +53,10 @@ void DefaultRender::rendering()
                     double values[4] = {0, 0, 0, 0};
                     double factor = 0;
 
-                    if (g->intersection(camera_rays[i]))
+                    Vector3d point;
+                    LocalGeometry local;
+
+                    if (g->intersection(camera_rays[i], point, local))
                     {
                         values[3] = 1;
 
@@ -58,7 +67,8 @@ void DefaultRender::rendering()
                             values[k] = c->energy(camera_rays[i],
                                     wavelenght_camera[j], k) /
                                 c->probability(camera_rays[i],
-                                        wavelenght_camera[j], k) * factor;
+                                        wavelenght_camera[j], k) * factor *
+                                rayFactor(point, local);
                         }
 
                         c->integrator(x, y).sample(Image::RGBA(values[0],
