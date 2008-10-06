@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 
     DefaultRender(*camera, gc, *geometry).rendering();
 
+    delete blueMaterial;
     delete geometry;
     delete material;
     delete camera;
