@@ -25,6 +25,7 @@
 #include "DefaultRender.h"
 #include "Triangle.h"
 #include "GeometryCollector.h"
+#include "DiffuseMaterial.h"
 
 using namespace Eigen;
 
@@ -35,6 +36,8 @@ int main(int argc, char *argv[])
     Camera *camera = new PinholeCamera("ba.exr", 800, 600, matrix, matrix);
     Material *material = new BlackMaterial();
     Geometry *geometry = new PointGeometry(*material, Vector3d(0, 0, 0));
+    Material *blueMaterial = new DiffuseMaterial(Gaussian(445, 20), 0.5,
+             Gaussian(0, 0), 0);
 
     double uv1[3][2] = {{0, 0},
                         {0, 1},
@@ -42,7 +45,7 @@ int main(int argc, char *argv[])
     Vector3d p1[3] = {Vector3d(-0.5, -1, 4.5),
                       Vector3d(-0.5,  0, 3),
                       Vector3d( 0.5,  0, 3)};
-    Triangle t1(*material, p1, uv1);
+    Triangle t1(*blueMaterial, p1, uv1);
 
     double uv2[3][2] = {{0, 0},
                         {1, 1},
@@ -50,7 +53,7 @@ int main(int argc, char *argv[])
     Vector3d p2[3] = {Vector3d(-0.5, -1, 4.5),
                       Vector3d( 0.5,  0, 3),
                       Vector3d( 0.5, -1, 4.5)};
-    Triangle t2(*material, p2, uv2);
+    Triangle t2(*blueMaterial, p2, uv2);
 
     GeometryCollector gc;
 
