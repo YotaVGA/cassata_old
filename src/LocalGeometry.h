@@ -40,14 +40,14 @@ class LocalGeometry
                 double u = 0, double v = 0) : m(material), n(normal), m_u(u),
                 m_v(v) {}
 
-        inline const Material *material() const
+        inline const Material &material() const
         {
-            return m;
+            return *m;
         }
 
-        inline void setMaterial(const Material *material)
+        inline void setMaterial(const Material &material)
         {
-            m = material;
+            m = &material;
         }
 
         inline const Angle &normal() const
