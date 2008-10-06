@@ -23,22 +23,19 @@
 
 using namespace Eigen;
 
-static double rayFactor(double lambda, Ray &ray, Vector3d &point,
-        LocalGeometry &local);
-
-static double direct(double lambda, Ray &ray, Vector3d &point,
+double DefaultRender::direct(double lambda, Ray &ray, Vector3d &point,
         LocalGeometry &local)
 {
     return 0;
 }
 
-static double indirect(double lambda, Ray &ray, Vector3d &point,
+double DefaultRender::indirect(double lambda, Ray &ray, Vector3d &point,
         LocalGeometry &local)
 {
     return 0;
 }
 
-static double rayFactor(double lambda, Ray &ray, Vector3d &point,
+double DefaultRender::rayFactor(double lambda, Ray &ray, Vector3d &point,
         LocalGeometry &local)
 {
     double L = direct(lambda, ray, point, local);
