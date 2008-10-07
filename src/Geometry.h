@@ -56,6 +56,23 @@ class Geometry
             distribution(outs, 0, jitx * jity, jitx, jity);
         }
 
+        virtual void distribution(Eigen::Vector3d outs[],
+                LocalGeometry localOuts[], unsigned int start,
+                unsigned int stop, unsigned int jitx, unsigned int jity) const;
+
+        inline void distribution(Eigen::Vector3d outs[],
+                LocalGeometry localOuts[], unsigned int stop) const
+        {
+            distribution(outs, localOuts, 0, stop, 1, 1);
+        }
+
+        inline void distribution(Eigen::Vector3d outs[],
+                LocalGeometry localOuts[], unsigned int jitx,
+                unsigned int jity) const
+        {
+            distribution(outs, localOuts, 0, jitx * jity, jitx, jity);
+        }
+
         virtual LocalGeometry local(const Eigen::Vector3d &point) const = 0;
         virtual bool isInGeometry(const Eigen::Vector3d &point) const = 0;
 

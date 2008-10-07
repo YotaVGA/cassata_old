@@ -62,3 +62,12 @@ bool Geometry::intersection(const Ray &ray, Vector3d &point,
     localGeometry = local(point);
     return r;
 }
+
+void Geometry::distribution(Eigen::Vector3d outs[], LocalGeometry localOuts[],
+        unsigned int start, unsigned int stop, unsigned int jitx,
+        unsigned int jity) const
+{
+    distribution(outs, start, stop, jitx, jity);
+    for (unsigned int i = 0; i <= stop - start + 1; i++)
+        localOuts[i] = local(outs[i]);
+}
