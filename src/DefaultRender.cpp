@@ -40,7 +40,7 @@ double DefaultRender::direct(double lambda, Ray &ray, Vector3d &point,
         /* STUB */
     }
 
-    return L;
+    return L / (ray_shadows * ray_shadows);
 }
 
 double DefaultRender::indirect(double lambda, Ray &ray, Vector3d &point,
