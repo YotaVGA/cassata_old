@@ -23,8 +23,8 @@
 
 using namespace Eigen;
 
-double DefaultRender::direct(double lambda, Ray &ray, Vector3d &point,
-        LocalGeometry &local)
+void DefaultRender::direct(unsigned int n, double outs[], double lambdas[],
+        Ray &ray, Vector3d &point, LocalGeometry &local)
 {
     const unsigned int ray_shadows = 1;
 
@@ -33,8 +33,7 @@ double DefaultRender::direct(double lambda, Ray &ray, Vector3d &point,
 
     l->distribution(lightPoints, lightLocals, 0, ray_shadows * ray_shadows,
             ray_shadows, ray_shadows);
-
-    double L = 0;
+    double div = 1. / (ray_shadows * ray_shadows);
 
     for (unsigned int i = 0; i < ray_shadows * ray_shadows; i++)
     {
@@ -42,26 +41,30 @@ double DefaultRender::direct(double lambda, Ray &ray, Vector3d &point,
         Vector3d idirv = -dirv;
         Angle dir = Angle(dirv);
         Angle idir = Angle(idirv);
-        L += local.material().BSDF(lambda, local, ray.angle(), dir) *
-            lightLocals[i].material().EDF(lambda, lightLocals[i], idir) *
-            dot(lightLocals[i].normal().cartesian(), idirv) *
-            dot(local.normal().cartesian(), dirv) / dirv.norm2();
+        double K = dot(lightLocals[i].normal().cartesian(), idirv) *
+            dot(local.normal().cartesian(), dirv) / dirv.norm2() * div;
+
+        for (unsigned int j = 0; j < n; j++)
+        {
+            outs[j] += local.material().BSDF(lambdas[j], local, ray.angle(),
+                    dir) *
+                lightLocals[i].material().EDF(lambdas[j], lightLocals[i],
+                        idir) * K;
+        }
     }
-
-    return L / (ray_shadows * ray_shadows);
 }
 
-double DefaultRender::indirect(double lambda, Ray &ray, Vector3d &point,
-        LocalGeometry &local)
+void DefaultRender::indirect(unsigned int n, double outs[], double lambdas[],
+        Ray &ray, Vector3d &point, LocalGeometry &local)
 {
-    return 0;
+    /* STUB */
 }
 
-double DefaultRender::rayFactor(double lambda, Ray &ray, Vector3d &point,
-        LocalGeometry &local)
+void DefaultRender::rayFactor(unsigned int n, double outs[], double lambdas[],
+        Ray &ray, Vector3d &point, LocalGeometry &local)
 {
-    double L = direct(lambda, ray, point, local);
-    return L + indirect(lambda, ray, point, local);
+    direct(n, outs, lambdas, ray, point, local);
+    indirect(n, outs, lambdas, ray, point, local);
 }
 
 void DefaultRender::rendering()
@@ -84,29 +87,34 @@ void DefaultRender::rendering()
                 c->wavelenghtDistribution(wavelenght_camera, camera_rays[i],
                         0, wavelenght_samples - 1, wavelenght_jittering);
 
+                double factor[wavelenght_samples];
+                double values[4] = {0, 0, 0, 0};
+
                 for (unsigned int j = 0; j < wavelenght_samples; j++)
                 {
-                    double values[4] = {0, 0, 0, 0};
-                    double factor = 0;
+                    factor[j] = 0;
+                }
 
-                    Vector3d point;
-                    LocalGeometry local;
+                Vector3d point;
+                LocalGeometry local;
 
-                    if (g->intersection(camera_rays[i], point, local))
+                if (g->intersection(camera_rays[i], point, local))
+                {
+                    values[3] = 1;
+
+                    rayFactor(wavelenght_samples, factor, wavelenght_camera,
+                            camera_rays[i], point, local);
+                    for (unsigned int j = 0; j < wavelenght_samples; j++)
                     {
-                        values[3] = 1;
-
-                        factor = rayFactor(wavelenght_camera[i],
-                                camera_rays[j], point, local);
-                        factor += local.material().EDF(wavelenght_camera[j],
-                                local, Angle(-camera_rays[i].origin()));
+                        factor[j] += local.material().EDF(wavelenght_camera[j],
+                            local, Angle(-camera_rays[i].origin()));
 
                         for (unsigned int k = 0; k < 3; k++)
                         {
                             values[k] = c->energy(camera_rays[i],
                                     wavelenght_camera[j], k) /
                                 c->probability(camera_rays[i],
-                                        wavelenght_camera[j], k) * factor;
+                                        wavelenght_camera[j], k) * factor[j];
                         }
 
                         c->integrator(x, y).sample(Image::RGBA(values[0],

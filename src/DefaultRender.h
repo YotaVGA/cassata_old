@@ -27,14 +27,14 @@
 class DefaultRender : public Render
 {
     protected:
-        double direct(double lambda, Ray &ray, Eigen::Vector3d &point,
-                LocalGeometry &local);
+        void direct(unsigned int n, double outs[], double lambdas[],
+                Ray &ray, Eigen::Vector3d &point, LocalGeometry &local);
 
-        double indirect(double lambda, Ray &ray, Eigen::Vector3d &point,
-                LocalGeometry &local);
+        void indirect(unsigned int n, double outs[], double lambdas[],
+                Ray &ray, Eigen::Vector3d &point, LocalGeometry &local);
 
-        double rayFactor(double lambda, Ray &ray, Eigen::Vector3d &point,
-                LocalGeometry &local);
+        void rayFactor(unsigned int n, double outs[], double lambdas[],
+                Ray &ray, Eigen::Vector3d &point, LocalGeometry &local);
     public:
         DefaultRender(Camera &camera, const Geometry &geometries,
                 const Geometry &lights) : Render(camera, geometries, lights)
