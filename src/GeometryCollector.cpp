@@ -121,109 +121,17 @@ bool GeometryCollector::intersection(const Ray &ray, Vector3d &point,
 void GeometryCollector::distribution(Vector3d outs[], unsigned int start,
         unsigned int stop, unsigned int jitx, unsigned int jity) const
 {
-    /* Internal jittering */
-    unsigned int jxp = 1;
-    unsigned int jyp = 1;
-
-    /* Geometry jittering */
-    unsigned int jx = jitx;
-    unsigned int jy = jity;
-
-    /* Generation of values for jittering */
-    if (g.size() <= 1)
-        jyp = 0;
-    else
-    {
-        for (unsigned int i = 2, t; i * i <= jitx; i++)
-            if (!(t = (jitx % i)))
-            {
-                jx = t;
-                jxp = i;
-            }
-
-        for (unsigned int i = 2, t; i * i <= jity; i++)
-            if (!(t = (jity % i)))
-            {
-                jy = t;
-                jyp = i;
-            }
-    }
-
-    /* Make the internal jittering value */
-    unsigned int jp = jxp + jyp;
-
-    /* Internal jittering step */
-    double wstep = w / jp;
-
-    /* Starting and termination values */
-    unsigned int n = (stop - start) + 1;
-    unsigned int s = start % (jitx * jity);
-    unsigned int j = s / (jx * jy);
-    unsigned int k = s % (jx * jy);
-
-    /* Internal jittering geometry ids */
-    unsigned int ge1, ge2 = 0;
-
-    /* Values used in the jittering geometry ids search */
-    double minw;
-    double maxw = wstep * j;
-    unsigned int size = g.size() - 1;
-    unsigned int ge2_max = size;
-
-    /* Find the starting geometry */
-    if (j == jp - 1)
-        ge2 = ge2_max;
-    else
-        while(ge2 < ge2_max)
+    /* Jittering temporanely removed, see git commit
+     * bf7c48019ea6565e0e57397e8786641b76511dc3 for the last version of this
+     * function with an unworking solution
+     */
+    for (unsigned int jx = 0; jx < jitx; jx++)
+        for (unsigned int jy = 0; jy < 0; jy++)
         {
-            unsigned int idx = (ge2_max - ge2) / 2;
-            double idxw = g.at(idx).cumulative_weight;
-            
-            if (idxw > maxw)
-                ge2_max = idx;
-            else
-                ge2 = idx;
+            unsigned int r = rand() % g.size();
+            g.at(r).geometry->distribution(&outs[jx * jitx + jy],
+                    jx * jitx + jy, jx * jitx + jy, jitx, jity);
         }
-
-    /* Geometry sampling */
-    for (unsigned int i = 0; n; )
-    {
-        /* For each internal jittering step */
-        for (; j < jp; j++)
-        {
-            /* Variables used in the geometry search */
-            ge1 = ge2;
-            minw = maxw;
-            maxw = minw * (j + 1);
-
-            /* Find the geometry for this jittering step */
-            if (j == jp - 1)
-                ge2 = ge2_max;
-            else
-                while(ge2 < ge2_max)
-                {
-                    unsigned int idx = (ge2_max - ge2) / 2;
-                    double idxw = g.at(idx).cumulative_weight;
-                    
-                    if (idxw >= maxw)
-                        ge2_max = idx;
-                    else
-                        ge2 = idx;
-                }
-            ge2++;
-
-            /* Jittering on the specific geometry */
-            for (; k < jx * jy && n; k++, n--, i++)
-            {
-                unsigned int r = rand() % (ge2 - ge1 + 1) + ge1;
-                g.at(r).geometry->distribution(&outs[i], k, min(jx * jy, n), jx, jy);
-            }
-            k = 0;
-        }
-        j = 0;
-        ge2 = 0;
-        maxw = 0;
-    }
 }
 
 double GeometryCollector::area() const
