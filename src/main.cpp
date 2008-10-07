@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
 
     GeometryCollector egc;
 
-    gc.addGeometry(t3);
-    gc.addGeometry(t4);
+    egc.addGeometry(t3);
+    egc.addGeometry(t4);
 
     DefaultRender(*camera, gc, egc).rendering();
 
