@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <algorithm>
 #include "GeometryCollector.h"
 
 using namespace std;
@@ -125,11 +126,20 @@ void GeometryCollector::distribution(Vector3d outs[], unsigned int start,
      * bf7c48019ea6565e0e57397e8786641b76511dc3 for the last version of this
      * function with an unworking solution
      */
+
+    double K = A / RAND_MAX;
+
     for (unsigned int jx = 0; jx < jitx; jx++)
         for (unsigned int jy = 0; jy < 0; jy++)
         {
-            unsigned int r = rand() % g.size();
-            g.at(r).geometry->distribution(&outs[jx * jitx + jy],
+            double r = rand() * K;
+            WeightedGeometry w;
+            w.cumulative_weight = r;
+
+            vector<WeightedGeometry>::const_iterator i =
+                upper_bound(g.begin(), g.end(), w);
+
+            i->geometry->distribution(&outs[jx * jitx + jy],
                     jx * jitx + jy, jx * jitx + jy, jitx, jity);
         }
 }

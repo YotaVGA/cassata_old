@@ -34,6 +34,11 @@ class GeometryCollector : public Geometry
             Geometry *geometry;
             double weight;
             double cumulative_weight;
+            
+            inline bool operator<(const WeightedGeometry &b) const
+            {
+                return cumulative_weight < b.cumulative_weight;
+            }
         };
 
         std::vector<WeightedGeometry> g;
