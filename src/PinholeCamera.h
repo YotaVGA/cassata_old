@@ -47,7 +47,7 @@ class PinholeCamera : public Camera
                                                    p(m * Eigen::Vector3d(0,
                                                                0, 0)),
                                                    g(vm, p), R(575, 85),
-                                                   G(535, 100), B(445, 50)
+                                                   G(535, 60), B(445, 50)
         {}
 
         virtual void distribution(Ray outs[], unsigned int x, unsigned int y,
