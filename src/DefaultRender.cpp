@@ -29,15 +29,23 @@ double DefaultRender::direct(double lambda, Ray &ray, Vector3d &point,
     const unsigned int ray_shadows = 1;
 
     Vector3d lightPoints[ray_shadows * ray_shadows];
+    LocalGeometry lightLocals[ray_shadows * ray_shadows];
 
-    l->distribution(lightPoints, 0, ray_shadows * ray_shadows, ray_shadows,
-            ray_shadows);
+    l->distribution(lightPoints, lightLocals, 0, ray_shadows * ray_shadows,
+            ray_shadows, ray_shadows);
 
     double L = 0;
 
     for (unsigned int i = 0; i < ray_shadows * ray_shadows; i++)
     {
-        /* STUB */
+        Vector3d dirv = lightPoints[i] - point;
+        Vector3d idirv = -dirv;
+        Angle dir = Angle(dirv);
+        Angle idir = Angle(idirv);
+        L += local.material().BSDF(lambda, local, ray.angle(), dir) *
+            lightLocals[i].material().EDF(lambda, lightLocals[i], idir) *
+            dot(lightLocals[i].normal().cartesian(), idirv) *
+            dot(local.normal().cartesian(), dirv) / dirv.norm2();
     }
 
     return L / (ray_shadows * ray_shadows);
