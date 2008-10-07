@@ -26,7 +26,21 @@ using namespace Eigen;
 double DefaultRender::direct(double lambda, Ray &ray, Vector3d &point,
         LocalGeometry &local)
 {
-    return 0;
+    const unsigned int ray_shadows = 1;
+
+    Vector3d lightPoints[ray_shadows * ray_shadows];
+
+    l->distribution(lightPoints, 0, ray_shadows * ray_shadows, ray_shadows,
+            ray_shadows);
+
+    double L = 0;
+
+    for (unsigned int i = 0; i < ray_shadows * ray_shadows; i++)
+    {
+        /* STUB */
+    }
+
+    return L;
 }
 
 double DefaultRender::indirect(double lambda, Ray &ray, Vector3d &point,
