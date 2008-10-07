@@ -139,8 +139,8 @@ void GeometryCollector::distribution(Vector3d outs[], unsigned int start,
             vector<WeightedGeometry>::const_iterator i =
                 upper_bound(g.begin(), g.end(), w);
 
-            i->geometry->distribution(&outs[jx * jitx + jy],
-                    jx * jitx + jy, jx * jitx + jy, jitx, jity);
+            i->geometry->distribution(&outs[jx * jity + jy],
+                    jx * jity + jy, jx * jity + jy, jitx, jity);
         }
 }
 
