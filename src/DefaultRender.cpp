@@ -83,23 +83,23 @@ void DefaultRender::rendering()
 
             for (unsigned int i = 0; i < camera_samples; i++)
             {
-                double wavelenght_camera[wavelenght_samples];
-                c->wavelenghtDistribution(wavelenght_camera, camera_rays[i],
-                        0, wavelenght_samples - 1, wavelenght_jittering);
-
-                double factor[wavelenght_samples];
-                double values[4] = {0, 0, 0, 0};
-
-                for (unsigned int j = 0; j < wavelenght_samples; j++)
-                {
-                    factor[j] = 0;
-                }
-
                 Vector3d point;
                 LocalGeometry local;
 
                 if (g->intersection(camera_rays[i], point, local))
                 {
+                    double wavelenght_camera[wavelenght_samples];
+                    c->wavelenghtDistribution(wavelenght_camera, camera_rays[i],
+                            0, wavelenght_samples - 1, wavelenght_jittering);
+
+                    double factor[wavelenght_samples];
+                    double values[4] = {0, 0, 0, 0};
+
+                    for (unsigned int j = 0; j < wavelenght_samples; j++)
+                    {
+                        factor[j] = 0;
+                    }
+
                     values[3] = 1;
 
                     rayFactor(wavelenght_samples, factor, wavelenght_camera,
