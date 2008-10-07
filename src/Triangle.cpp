@@ -110,7 +110,7 @@ bool Triangle::intersection(const Ray &ray, double &distance) const
 
     distance = int_intersection(ray, b);
 
-    return distance >= 0;
+    return ray.t1() <= distance && ray.t2() > distance;
 }
 
 bool Triangle::intersection(const Ray &ray, double &distance,
@@ -120,7 +120,7 @@ bool Triangle::intersection(const Ray &ray, double &distance,
 
     distance = int_intersection(ray, b);
 
-    if (distance < 0)
+    if (!(ray.t1() <= distance && ray.t2() > distance))
         return false;
 
     localGeometry.setMaterial(*m);
