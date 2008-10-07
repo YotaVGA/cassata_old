@@ -99,7 +99,7 @@ void Triangle::distribution(Vector3d outs[], unsigned int start,
                 b[0] = sqrt(d1);
                 b[1] = d2 * b[0];
 
-                outs[i] = cartesian(Vector3d(1 - b[0], b[0] - b[1], b[2]));
+                outs[i] = cartesian(Vector3d(1 - b[0], b[0] - b[1], b[1]));
             }
         }
 }
