@@ -130,7 +130,7 @@ void GeometryCollector::distribution(Vector3d outs[], unsigned int start,
     double K = A / RAND_MAX;
 
     for (unsigned int jx = 0; jx < jitx; jx++)
-        for (unsigned int jy = 0; jy < 0; jy++)
+        for (unsigned int jy = 0; jy < jity; jy++)
         {
             double r = rand() * K;
             WeightedGeometry w;
