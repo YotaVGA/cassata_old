@@ -41,14 +41,14 @@ int main(int argc, char *argv[])
     Camera *camera = new PinholeCamera("ba.exr", 800, 600, matrix, matrix);
     Material *material = new BlackMaterial();
     Geometry *geometry = new PointGeometry(*material, Vector3d(0, 0, 0));
-    Material *blueMaterial = new DiffuseMaterial(Gaussian(445, 20), 0.5,
+    Material *blueMaterial = new DiffuseMaterial(Gaussian(445, 20), 1,
              Gaussian(0, 0), 0);
     Material *redEmission = new DiffuseMaterial(Gaussian(0, 0), 0,
-            Gaussian(575, 85), 0.5);
+            Gaussian(575, 85), 1);
     Material *greenEmission = new DiffuseMaterial(Gaussian(0, 0), 0,
-            Gaussian(535, 100), 0.5);
+            Gaussian(535, 100), 1);
     Material *blueEmission = new DiffuseMaterial(Gaussian(0, 0), 0,
-            Gaussian(445, 50), 0.5);
+            Gaussian(445, 50), 1);
     Material *emissionMaterials[] = {redEmission, greenEmission,
         blueEmission};
     Material *emitter = new MaterialSum(3, emissionMaterials);
