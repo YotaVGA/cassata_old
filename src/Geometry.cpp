@@ -63,7 +63,7 @@ bool Geometry::intersection(const Ray &ray, Vector3d &point,
     return r;
 }
 
-void Geometry::distribution(Eigen::Vector3d outs[], LocalGeometry localOuts[],
+void Geometry::distribution(Vector3d outs[], LocalGeometry localOuts[],
         unsigned int start, unsigned int stop, unsigned int jitx,
         unsigned int jity) const
 {
