@@ -38,11 +38,18 @@ void DefaultRender::direct(unsigned int n, double outs[], double lambdas[],
     for (unsigned int i = 0; i < ray_shadows * ray_shadows; i++)
     {
         Vector3d dirv = lightPoints[i] - point;
-        Vector3d idirv = -dirv;
+        double dirvl2 = dirv.norm2();
         Angle dir = Angle(dirv);
+
+        double d;
+        if (g->intersection(Ray(point, dir, 1e-10), d) &&
+                d * d * (1 + 1e-5) < dirvl2)
+            continue;
+
+        Vector3d idirv = -dirv;
         Angle idir = Angle(idirv);
         double K = dot(lightLocals[i].normal().cartesian(), idirv) *
-            dot(local.normal().cartesian(), dirv) / dirv.norm2() * div;
+            dot(local.normal().cartesian(), dirv) * div / dirvl2;
 
         for (unsigned int j = 0; j < n; j++)
         {
