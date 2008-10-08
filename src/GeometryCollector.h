@@ -69,6 +69,9 @@ class GeometryCollector : public Geometry
         virtual void distribution(Eigen::Vector3d outs[], unsigned int start,
                 unsigned int stop, unsigned int jitx,
                 unsigned int jity) const;
+        virtual void distribution(Eigen::Vector3d outs[],
+                LocalGeometry localOuts[], unsigned int start,
+                unsigned int stop, unsigned int jitx, unsigned int jity) const;
 
         virtual double area() const;
 };

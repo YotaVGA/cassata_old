@@ -146,6 +146,29 @@ void GeometryCollector::distribution(Vector3d outs[], unsigned int start,
     }
 }
 
+void GeometryCollector::distribution(Vector3d outs[],
+        LocalGeometry localOuts[], unsigned int start, unsigned int stop,
+        unsigned int jitx, unsigned int jity) const
+{
+    double K = A / RAND_MAX;
+
+    unsigned int nstart = start % (jitx * jity);
+    unsigned int n = (stop - start) + 1;
+
+    for (unsigned int c = 0; n; c++, n--)
+    {
+        double r = rand() * K;
+        WeightedGeometry w;
+        w.cumulative_weight = r;
+
+        vector<WeightedGeometry>::const_iterator i =
+            upper_bound(g.begin(), g.end(), w);
+
+        i->geometry->distribution(&outs[c], &localOuts[c], c + nstart,
+                c + nstart, jitx, jity);
+    }
+}
+
 double GeometryCollector::area() const
 {
     return A;
