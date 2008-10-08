@@ -56,14 +56,7 @@ class GeometryCollector : public Geometry
         virtual LocalGeometry local(const Eigen::Vector3d &point) const;
 
         virtual bool intersection(const Ray &ray, double &distance) const;
-        virtual bool intersection(const Ray &ray) const;
-        virtual bool intersection(const Ray &ray,
-                Eigen::Vector3d &point) const;
-        virtual bool intersection(const Ray &ray,
-                LocalGeometry &localGeometry) const;
         virtual bool intersection(const Ray &ray, double &distance,
-                LocalGeometry &localGeometry) const;
-        virtual bool intersection(const Ray &ray, Eigen::Vector3d &point,
                 LocalGeometry &localGeometry) const;
 
         virtual void distribution(Eigen::Vector3d outs[], unsigned int start,

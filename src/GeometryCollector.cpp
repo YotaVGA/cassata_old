@@ -58,65 +58,37 @@ LocalGeometry GeometryCollector::local(const Vector3d &point) const
 
 bool GeometryCollector::intersection(const Ray &ray, double &distance) const
 {
+    double d;
+    bool c = false;
+    
     for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();
             i++)
-        if (i->geometry->intersection(ray, distance))
-            return true;
+        if (i->geometry->intersection(ray, d) && (!c || d < distance))
+        {
+            distance = d;
+            c = true;
+        }
 
-    return false;
-}
-
-bool GeometryCollector::intersection(const Ray &ray) const
-{
-    for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();
-            i++)
-        if (i->geometry->intersection(ray))
-            return true;
-
-    return false;
-}
-
-bool GeometryCollector::intersection(const Ray &ray, Vector3d &point) const
-{
-    for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();
-            i++)
-        if (i->geometry->intersection(ray, point))
-            return true;
-
-    return false;
-}
-
-bool GeometryCollector::intersection(const Ray &ray,
-        LocalGeometry &localGeometry) const
-{
-    for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();
-            i++)
-        if (i->geometry->intersection(ray, localGeometry))
-            return true;
-
-    return false;
+    return c;
 }
 
 bool GeometryCollector::intersection(const Ray &ray, double &distance,
         LocalGeometry &localGeometry) const
 {
+    double d;
+    bool c = false;
+    LocalGeometry local;
+    
     for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();
             i++)
-        if (i->geometry->intersection(ray, distance, localGeometry))
-            return true;
+        if (i->geometry->intersection(ray, d, local) && (!c || d < distance))
+        {
+            distance = d;
+            localGeometry = local;
+            c = true;
+        }
 
-    return false;
-}
-
-bool GeometryCollector::intersection(const Ray &ray, Vector3d &point,
-        LocalGeometry &localGeometry) const
-{
-    for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();
-            i++)
-        if (i->geometry->intersection(ray, point, localGeometry))
-            return true;
-
-    return false;
+    return c;
 }
 
 void GeometryCollector::distribution(Vector3d outs[], unsigned int start,

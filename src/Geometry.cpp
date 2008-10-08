@@ -58,8 +58,10 @@ bool Geometry::intersection(const Ray &ray, double &distance,
 bool Geometry::intersection(const Ray &ray, Vector3d &point,
         LocalGeometry &localGeometry) const
 {
-    bool r = intersection(ray, point);
-    localGeometry = local(point);
+    double distance;
+    bool r = intersection(ray, distance, localGeometry);
+    point = ray.angle().cartesian() * distance + ray.origin();
+
     return r;
 }
 
