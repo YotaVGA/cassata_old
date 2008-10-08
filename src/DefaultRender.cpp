@@ -31,7 +31,7 @@ void DefaultRender::direct(unsigned int n, double outs[], double lambdas[],
     Vector3d lightPoints[ray_shadows * ray_shadows];
     LocalGeometry lightLocals[ray_shadows * ray_shadows];
 
-    l->distribution(lightPoints, lightLocals, 0, ray_shadows * ray_shadows,
+    l->distribution(lightPoints, lightLocals, 0, ray_shadows * ray_shadows - 1,
             ray_shadows, ray_shadows);
     double div = 1. / (ray_shadows * ray_shadows);
 
