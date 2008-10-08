@@ -68,6 +68,6 @@ void Geometry::distribution(Vector3d outs[], LocalGeometry localOuts[],
         unsigned int jity) const
 {
     distribution(outs, start, stop, jitx, jity);
-    for (unsigned int i = 0; i <= stop - start + 1; i++)
+    for (unsigned int i = 0; i <= stop - start; i++)
         localOuts[i] = local(outs[i]);
 }
