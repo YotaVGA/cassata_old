@@ -31,6 +31,11 @@ double PointGeometry::area() const
     return 0;
 }
 
+bool PointGeometry::isInBox(const Box &box) const
+{
+    return box.isInBox(p);
+}
+
 void PointGeometry::distribution(Vector3d outs[], unsigned int start,
         unsigned int stop, unsigned int jitx,
         unsigned int jity) const

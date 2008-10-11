@@ -24,6 +24,7 @@
 
 #include "Material.h"
 #include "Ray.h"
+#include "Box.h"
 
 class Geometry
 {
@@ -75,6 +76,8 @@ class Geometry
 
         virtual LocalGeometry local(const Eigen::Vector3d &point) const = 0;
         virtual bool isInGeometry(const Eigen::Vector3d &point) const = 0;
+
+        virtual bool isInBox(const Box &box) const = 0;
 
         virtual bool intersection(const Ray &ray, double &distance) const = 0;
         virtual bool intersection(const Ray &ray) const;

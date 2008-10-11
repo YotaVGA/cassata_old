@@ -34,6 +34,7 @@ class PointGeometry : public Geometry
             Geometry(material), p(point) {};
 
         virtual double area() const;
+        virtual bool isInBox(const Box &box) const;
 
         virtual void distribution(Eigen::Vector3d outs[], unsigned int start,
                 unsigned int stop, unsigned int jitx,

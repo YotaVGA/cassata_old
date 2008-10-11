@@ -143,6 +143,8 @@ class Triangle : public Geometry
 
         virtual LocalGeometry local(const Eigen::Vector3d &point) const;
 
+        virtual bool isInBox(const Box &box) const;
+
         inline bool inPlane(const Eigen::Vector3d &point) const
         {
             return boost::test_tools::check_is_small(dot(n.cartesian(),

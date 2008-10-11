@@ -55,6 +55,8 @@ class GeometryCollector : public Geometry
 
         virtual LocalGeometry local(const Eigen::Vector3d &point) const;
 
+        virtual bool isInBox(const Box &box) const;
+
         virtual bool intersection(const Ray &ray, double &distance) const;
         virtual bool intersection(const Ray &ray, double &distance,
                 LocalGeometry &localGeometry) const;

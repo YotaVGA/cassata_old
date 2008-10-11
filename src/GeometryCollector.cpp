@@ -56,6 +56,16 @@ LocalGeometry GeometryCollector::local(const Vector3d &point) const
     return LocalGeometry(m);
 }
 
+bool GeometryCollector::isInBox(const Box &box) const
+{
+    for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();
+            i++)
+        if (!i->geometry->isInBox(box))
+            return false;
+
+    return true;
+}
+
 bool GeometryCollector::intersection(const Ray &ray, double &distance) const
 {
     double d;
