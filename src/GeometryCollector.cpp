@@ -36,6 +36,10 @@ void GeometryCollector::addGeometry(Geometry &geometry, double weight)
     w += dwg;
 }
 
+void GeometryCollector::endGeometries()
+{
+}
+
 bool GeometryCollector::isInGeometry(const Vector3d &point) const
 {
     for (vector<WeightedGeometry>::const_iterator i = g.begin(); i != g.end();

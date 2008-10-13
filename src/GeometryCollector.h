@@ -50,6 +50,7 @@ class GeometryCollector : public Geometry
         inline GeometryCollector() : Geometry(BlackMaterial()), A(0) {}
 
         virtual void addGeometry(Geometry &geometry, double weight = -1);
+        virtual void endGeometries();
 
         virtual bool isInGeometry(const Eigen::Vector3d &point) const;
 

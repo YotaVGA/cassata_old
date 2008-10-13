@@ -256,10 +256,14 @@ int main(int argc, char *argv[])
     gc.addGeometry(t21);
     gc.addGeometry(t22);
 
+    gc.endGeometries();
+
     GeometryCollector egc;
 
     egc.addGeometry(t3);
     egc.addGeometry(t4);
+
+    egc.endGeometries();
 
     DefaultRender(*camera, gc, egc).rendering();
 
