@@ -30,9 +30,11 @@ class Geometry
 {
     protected:
         const Material *m;
+        Box gbox;
 
     public:
-        Geometry(const Material &material) : m(&material) {}
+        Geometry(const Material &material, Box box = Box()) : m(&material), 
+                gbox(box) {}
 
         const Material &material() const
         {
@@ -40,6 +42,11 @@ class Geometry
         }
 
         virtual double area() const = 0;
+
+        inline const Box &box() const
+        {
+            return gbox;
+        }
 
         virtual void distribution(Eigen::Vector3d outs[], unsigned int start,
                 unsigned int stop, unsigned int jitx,
@@ -77,7 +84,7 @@ class Geometry
         virtual LocalGeometry local(const Eigen::Vector3d &point) const = 0;
         virtual bool isInGeometry(const Eigen::Vector3d &point) const = 0;
 
-        virtual bool isInBox(const Box &box) const = 0;
+        virtual bool isInBox(const Box &box) const;
 
         virtual bool intersection(const Ray &ray, double &distance) const = 0;
         virtual bool intersection(const Ray &ray) const;

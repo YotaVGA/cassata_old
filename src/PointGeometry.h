@@ -32,7 +32,7 @@ class PointGeometry : public Geometry
     public:
         PointGeometry(const Material &material,
                 const Eigen::Vector3d &point) :
-            Geometry(material), p(point) {};
+            Geometry(material, point), p(point) {};
 
         virtual double area() const;
         virtual bool isInBox(const Box &box) const;

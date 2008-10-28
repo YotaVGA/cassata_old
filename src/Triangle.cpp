@@ -39,6 +39,10 @@ void Triangle::init()
         1,        1,        1,        0
     };
     coefficents.readRows(&coeffs[0][0]);
+
+    gbox.setStartStop(p[0]);
+    gbox.enlarge(p[1]);
+    gbox.enlarge(p[2]);
 }
 
 double Triangle::area() const

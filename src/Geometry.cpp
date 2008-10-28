@@ -23,6 +23,11 @@
 
 using namespace Eigen;
 
+bool Geometry::isInBox(const Box &box) const
+{
+    return gbox.isInBox(box.start()) || gbox.isInBox(box.stop());
+}
+
 bool Geometry::intersection(const Ray &ray) const
 {
     double t;
