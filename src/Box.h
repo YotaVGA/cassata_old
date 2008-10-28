@@ -55,6 +55,12 @@ class Box
             b = stop;
         }
 
+        inline void setStartStop(const Eigen::Vector3d &point)
+        {
+            setStart(point);
+            setStop(point);
+        }
+
         inline bool isInBox(const Eigen::Vector3d &point) const
         {
             if (a.x() >= point.x() || a.y() >= point.y() ||
