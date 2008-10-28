@@ -26,7 +26,8 @@
 
 class PointGeometry : public Geometry
 {
-    Eigen::Vector3d p;
+    protected:
+        Eigen::Vector3d p;
 
     public:
         PointGeometry(const Material &material,
