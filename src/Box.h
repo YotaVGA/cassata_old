@@ -63,11 +63,14 @@ class Box
 
         inline bool isInBox(const Eigen::Vector3d &point) const
         {
-            if (a.x() >= point.x() || a.y() >= point.y() ||
-                    a.z() >= point.z())
+            if (a.x() >= point.x() * (1 + 1e-5) ||
+                    a.y() >= point.y() * (1 + 1e-5) ||
+                    a.z() >= point.z() * (1 + 1e-5))
                 return false;
 
-            if (b.x() < point.x() || b.y() < point.y() || b.z() < point.z())
+            if (b.x() < point.x() * (1 + 1e-5) ||
+                    b.y() < point.y() * (1 + 1e-5) ||
+                    b.z() < point.z() * (1 + 1e-5))
                 return false;
 
             return true;
@@ -86,8 +89,8 @@ class Box
 
         inline void enlarge(const Box &box)
         {
-            enlargeBox(box.start());
-            enlargeBox(box.stop());
+            enlarge(box.start());
+            enlarge(box.stop());
         }
 };
 
