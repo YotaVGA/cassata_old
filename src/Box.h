@@ -73,7 +73,7 @@ class Box
             return true;
         }
 
-        inline void enlargeBox(const Eigen::Vector3d &point)
+        inline void enlarge(const Eigen::Vector3d &point)
         {
             a.x() = std::min(a.x(), point.x());
             a.y() = std::min(a.y(), point.y());
@@ -84,7 +84,7 @@ class Box
             b.z() = std::max(b.z(), point.z());
         }
 
-        inline void enlargeBox(const Box &box)
+        inline void enlarge(const Box &box)
         {
             enlargeBox(box.start());
             enlargeBox(box.stop());
