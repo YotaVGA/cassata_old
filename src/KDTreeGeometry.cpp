@@ -19,17 +19,61 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <vector>
 #include "KDTreeGeometry.h"
+
+using namespace std;
 
 void KDTreeGeometry::endGeometries()
 {
+    /* Actually without infinite geometries */
     double cost = g.size();
     leaf = true;
+    Box tb1, tb2;
+
+    double invsurface = 1 / gbox.surface();
 
     for (unsigned int i = 0; i < 3; i++)
     {
-        /* STUB */
+        Box b1 = gbox;
+        Box b2 = gbox;
+
+        double a = gbox.start()[i];
+        double b = gbox.stop()[i];
+
+        unsigned long int steps = 2 * g.size();
+
+        double inc = (b - a) / steps;
+
+        for (unsigned long int j = 0; j < steps; j++)
+        {
+            double middle = a + inc * j;
+            b1.stop()[i] = middle;
+            b2.start()[i] = middle;
+            double tcost = 0.1;
+
+            double p1 = b1.surface() * invsurface;
+            double p2 = b2.surface() * invsurface;
+
+            for (vector<WeightedGeometry>::const_iterator k = g.begin();
+                    k != g.end() && tcost < cost; k++)
+            {
+                if (k->geometry->isInBox(b1))
+                    cost += p1;
+                if (k->geometry->isInBox(b2))
+                    cost += p2;
+            }
+
+            if (tcost < cost)
+            {
+                leaf = false;
+                tb1 = b1;
+                tb2 = b2;
+            }
+        }
     }
+
+    /* STUB */
 }
 
 bool KDTreeGeometry::isInGeometry(const Eigen::Vector3d &point) const
