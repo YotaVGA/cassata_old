@@ -111,6 +111,8 @@ void KDTreeGeometry::endGeometries()
         g1->endGeometries();
         g2->endGeometries();
 
+        w = 0;
+        A = 0;
         addGeometry(*g1, w1);
         addGeometry(*g2, w2);
     }
