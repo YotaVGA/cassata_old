@@ -35,6 +35,16 @@ class Box
                 const Eigen::Vector3d &stop) : a(start), b(stop) {}
         inline Box(const Eigen::Vector3d &point) : a(point), b(point) {}
 
+        inline Eigen::Vector3d &start()
+        {
+            return a;
+        }
+
+        inline Eigen::Vector3d &stop()
+        {
+            return b;
+        }
+
         inline const Eigen::Vector3d &start() const
         {
             return a;
