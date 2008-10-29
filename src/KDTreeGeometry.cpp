@@ -20,3 +20,45 @@
  */
 
 #include "KDTreeGeometry.h"
+
+void KDTreeGeometry::endGeometries()
+{
+    double cost = g.size();
+    leaf = true;
+
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        /* STUB */
+    }
+}
+
+bool KDTreeGeometry::isInGeometry(const Eigen::Vector3d &point) const
+{
+    /* STUB */
+    return GeometryCollector::isInGeometry(point);
+}
+
+LocalGeometry KDTreeGeometry::local(const Eigen::Vector3d &point) const
+{
+    /* STUB */
+    return GeometryCollector::local(point);
+}
+
+bool KDTreeGeometry::isInBox(const Box &box) const
+{
+    /* STUB */
+    return GeometryCollector::isInBox(box);
+}
+
+bool KDTreeGeometry::intersection(const Ray &ray, double &distance) const
+{
+    /* STUB */
+    return GeometryCollector::intersection(ray, distance);
+}
+
+bool KDTreeGeometry::intersection(const Ray &ray, double &distance,
+        LocalGeometry &localGeometry) const
+{
+    /* STUB */
+    return GeometryCollector::intersection(ray, distance, localGeometry);
+}

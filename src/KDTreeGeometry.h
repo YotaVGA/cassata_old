@@ -25,7 +25,22 @@
 
 class KDTreeGeometry : public GeometryCollector
 {
-    /* stub */
+    protected:
+        bool leaf;
+        Box box;
+
+    public:
+        virtual void endGeometries();
+
+        virtual bool isInGeometry(const Eigen::Vector3d &point) const;
+
+        virtual LocalGeometry local(const Eigen::Vector3d &point) const;
+
+        virtual bool isInBox(const Box &box) const;
+
+        virtual bool intersection(const Ray &ray, double &distance) const;
+        virtual bool intersection(const Ray &ray, double &distance,
+                LocalGeometry &localGeometry) const;
 };
 
 #endif
