@@ -30,6 +30,11 @@ void GeometryCollector::addGeometry(Geometry &geometry, double weight)
     double dwg = weight < 0 ? geometry.area() : weight;
     WeightedGeometry wg = {&geometry, dwg, dwg + w};
 
+    if (!g.size())
+        gbox = geometry.box();
+    else
+        gbox.enlarge(geometry.box());
+
     g.push_back(wg);
 
     A += geometry.area();
