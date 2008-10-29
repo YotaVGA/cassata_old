@@ -83,8 +83,8 @@ void KDTreeGeometry::endGeometries()
 
     if (!leaf)
     {
-        KDTreeGeometry g1(lev + 1, ng);
-        KDTreeGeometry g2(lev + 1, ng);
+        KDTreeGeometry *g1 = new KDTreeGeometry(lev + 1, ng);
+        KDTreeGeometry *g2 = new KDTreeGeometry(lev + 1, ng);
 
         double w1 = 0, w2 = 0;
 
@@ -96,23 +96,23 @@ void KDTreeGeometry::endGeometries()
             {
                 inserted = true;
                 w1 += g.back().weight;
-                g1.addGeometry(*g.back().geometry, g.back().weight);
+                g1->addGeometry(*g.back().geometry, g.back().weight);
             }
             if (g.back().geometry->isInBox(tb2))
             {
                 double tw = inserted ? 0 : g.back().weight;
                 w2 += tw;
-                g2.addGeometry(*g.back().geometry, tw);
+                g2->addGeometry(*g.back().geometry, tw);
             }
 
             g.pop_back();
         }
 
-        g1.endGeometries();
-        g2.endGeometries();
+        g1->endGeometries();
+        g2->endGeometries();
 
-        addGeometry(g1, w1);
-        addGeometry(g2, w2);
+        addGeometry(*g1, w1);
+        addGeometry(*g2, w2);
     }
 }
 
@@ -145,4 +145,12 @@ bool KDTreeGeometry::intersection(const Ray &ray, double &distance,
 {
     /* STUB */
     return GeometryCollector::intersection(ray, distance, localGeometry);
+}
+
+KDTreeGeometry::~KDTreeGeometry()
+{
+    if (!leaf)
+        for (vector<WeightedGeometry>::const_iterator i = g.begin();
+                i != g.end(); i++)
+            delete i->geometry;
 }

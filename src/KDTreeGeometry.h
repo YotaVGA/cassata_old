@@ -48,6 +48,8 @@ class KDTreeGeometry : public GeometryCollector
         virtual bool intersection(const Ray &ray, double &distance) const;
         virtual bool intersection(const Ray &ray, double &distance,
                 LocalGeometry &localGeometry) const;
+
+        virtual ~KDTreeGeometry();
 };
 
 #endif
