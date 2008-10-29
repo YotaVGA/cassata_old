@@ -67,9 +67,9 @@ void KDTreeGeometry::endGeometries()
                     k != g.end() && tcost < cost; k++)
             {
                 if (k->geometry->isInBox(b1))
-                    cost += p1;
+                    tcost += p1;
                 if (k->geometry->isInBox(b2))
-                    cost += p2;
+                    tcost += p2;
             }
 
             if (tcost < cost)
