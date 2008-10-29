@@ -73,14 +73,14 @@ class Box
 
         inline bool isInBox(const Eigen::Vector3d &point) const
         {
-            if (a.x() >= point.x() * (1 + 1e-5) ||
-                    a.y() >= point.y() * (1 + 1e-5) ||
-                    a.z() >= point.z() * (1 + 1e-5))
+            if (a.x() > point.x() * (1 + 1e-5) ||
+                    a.y() > point.y() * (1 + 1e-5) ||
+                    a.z() > point.z() * (1 + 1e-5))
                 return false;
 
-            if (b.x() < point.x() * (1 + 1e-5) ||
-                    b.y() < point.y() * (1 + 1e-5) ||
-                    b.z() < point.z() * (1 + 1e-5))
+            if (b.x() < point.x() * (1 - 1e-5) ||
+                    b.y() < point.y() * (1 - 1e-5) ||
+                    b.z() < point.z() * (1 - 1e-5))
                 return false;
 
             return true;
