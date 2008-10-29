@@ -92,6 +92,22 @@ class Box
             enlarge(box.start());
             enlarge(box.stop());
         }
+
+        inline double surface() const
+        {
+            double ax = a.x();
+            double ay = a.y();
+            double az = a.z();
+            double bx = b.x();
+            double by = b.y();
+            double bz = b.z();
+
+            double dx = bx - ax;
+            double dy = by - ay;
+            double dz = bz - az;
+
+            return dx * dy + dx * dz + dy * dz;
+        }
 };
 
 #endif
