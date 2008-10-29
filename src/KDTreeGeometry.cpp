@@ -61,6 +61,8 @@ void KDTreeGeometry::endGeometries()
             double p1 = b1.surface() * invsurface;
             double p2 = b2.surface() * invsurface;
 
+            double w1 = 0, w2 = 0;
+
             for (vector<WeightedGeometry>::const_iterator k = g.begin();
                     k != g.end() && tcost < cost; k++)
             {
@@ -79,7 +81,39 @@ void KDTreeGeometry::endGeometries()
         }
     }
 
-    /* STUB */
+    if (!leaf)
+    {
+        KDTreeGeometry g1(lev + 1, ng);
+        KDTreeGeometry g2(lev + 1, ng);
+
+        double w1 = 0, w2 = 0;
+
+        while (g.size())
+        {
+            bool inserted = false;
+
+            if (g.back().geometry->isInBox(tb1))
+            {
+                inserted = true;
+                w1 += g.back().weight;
+                g1.addGeometry(*g.back().geometry, g.back().weight);
+            }
+            if (g.back().geometry->isInBox(tb2))
+            {
+                double tw = inserted ? 0 : g.back().weight;
+                w2 += tw;
+                g2.addGeometry(*g.back().geometry, tw);
+            }
+
+            g.pop_back();
+        }
+
+        g1.endGeometries();
+        g2.endGeometries();
+
+        addGeometry(g1, w1);
+        addGeometry(g2, w2);
+    }
 }
 
 bool KDTreeGeometry::isInGeometry(const Eigen::Vector3d &point) const
