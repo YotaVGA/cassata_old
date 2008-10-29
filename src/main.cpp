@@ -26,7 +26,7 @@
 #include "PointGeometry.h"
 #include "DefaultRender.h"
 #include "Triangle.h"
-#include "GeometryCollector.h"
+#include "KDTreeGeometry.h"
 #include "DiffuseMaterial.h"
 #include "MaterialSum.h"
 
@@ -231,7 +231,7 @@ int main(int argc, char *argv[])
                        Vector3d( 1.5,  1.5, -0.1)};
     Triangle t22(*greenMaterial, p22, uv22);
 
-    GeometryCollector gc;
+    KDTreeGeometry gc;
 
     gc.addGeometry(t1);
     gc.addGeometry(t2);
@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
 
     gc.endGeometries();
 
-    GeometryCollector egc;
+    KDTreeGeometry egc;
 
     egc.addGeometry(t3);
     egc.addGeometry(t4);
