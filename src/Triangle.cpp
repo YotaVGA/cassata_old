@@ -72,7 +72,7 @@ bool Triangle::isInGeometry(const Vector3d &point) const
 
 bool Triangle::isInBox(const Box &box) const
 {
-    return box.isInBox(p[0]) && box.isInBox(p[1]) && box.isInBox(p[2]);
+    return box.isInBox(p[0]) || box.isInBox(p[1]) || box.isInBox(p[2]);
 }
 
 void Triangle::distribution(Vector3d outs[], unsigned int start,
