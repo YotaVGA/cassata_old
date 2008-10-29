@@ -28,7 +28,13 @@ void KDTreeGeometry::endGeometries()
 {
     /* Actually without infinite geometries */
     double cost = g.size();
+    if (!lev)
+        ng = g.size();
     leaf = true;
+
+    if (lev > 8 + 1.5 * log(ng))
+        return;
+
     Box tb1, tb2;
 
     double invsurface = 1 / gbox.surface();

@@ -28,8 +28,15 @@ class KDTreeGeometry : public GeometryCollector
     protected:
         bool leaf;
         Box box;
+        unsigned long int ng;
+        unsigned int lev;
+
+        KDTreeGeometry(unsigned int level, unsigned long int ngeometries) :
+            lev(level), ng(ngeometries) {}
 
     public:
+        KDTreeGeometry() : GeometryCollector(), lev(0) {}
+
         virtual void endGeometries();
 
         virtual bool isInGeometry(const Eigen::Vector3d &point) const;
